@@ -82,6 +82,15 @@ public class JobService {
         return updated;
     }
 
+    public Job toggleJobStatus(String id, boolean isActive) {
+        Job job = getJobById(id);
+        job.setIsActive(isActive);
+        job.setUpdatedAt(LocalDateTime.now());
+        Job updated = jobRepository.save(job);
+        log.info("Job status updated to {} for id: {}", isActive, id);
+        return updated;
+    }
+
     public void deleteJob(String id) {
         Job job = getJobById(id);
         job.setIsActive(false);
@@ -132,4 +141,3 @@ public class JobService {
                 .build();
     }
 }
-

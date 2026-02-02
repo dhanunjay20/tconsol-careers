@@ -89,6 +89,27 @@ public class JobController {
         }
     }
 
+    @PatchMapping("/admin/jobs/{id}/status")
+    // @PreAuthorize("hasRole('ADMIN')") // TODO: Enable for production
+    @Operation(summary = "Toggle job status", description = "Toggle the active status of a job (Admin only)")
+    public ResponseEntity<ApiResponse<Job>> toggleJobStatus(
+            @PathVariable String id,
+            @RequestBody Map<String, Boolean> statusUpdate
+    ) {
+        try {
+            Boolean isActive = statusUpdate.get("isActive");
+            if (isActive == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(ApiResponse.error("isActive field is required"));
+            }
+            Job updatedJob = jobService.toggleJobStatus(id, isActive);
+            return ResponseEntity.ok(ApiResponse.success("Job status updated successfully", updatedJob));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ApiResponse.error(e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/admin/jobs/{id}")
     // @PreAuthorize("hasRole('ADMIN')") // TODO: Enable for production
     @Operation(summary = "Delete job", description = "Soft delete a job listing (Admin only)")
