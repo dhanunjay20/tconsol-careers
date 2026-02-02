@@ -32,12 +32,12 @@ public class JobApplicationController {
     @PostMapping(value = "/applications", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "Submit job application", description = "Submit a new job application with resume upload")
     public ResponseEntity<ApiResponse<JobApplication>> submitApplication(
-            @RequestPart("application") @Valid JobApplication application,
+            @RequestPart("application") @Valid JobApplicationRequest applicationRequest,
             @RequestPart("resume") MultipartFile resume,
             HttpServletRequest request
     ) {
         try {
-            JobApplication submitted = applicationService.submitApplication(application, resume, request);
+            JobApplication submitted = applicationService.submitApplication(applicationRequest, resume, request);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(ApiResponse.success("Application submitted successfully", submitted));
         } catch (Exception e) {
@@ -178,4 +178,3 @@ public class JobApplicationController {
         return ResponseEntity.ok(ApiResponse.success(applications));
     }
 }
-

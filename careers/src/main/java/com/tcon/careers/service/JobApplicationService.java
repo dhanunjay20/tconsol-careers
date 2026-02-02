@@ -1,6 +1,7 @@
 package com.tcon.careers.service;
 
 import com.tcon.careers.dto.InterviewScheduleRequest;
+import com.tcon.careers.dto.JobApplicationRequest;
 import com.tcon.careers.dto.PageResponse;
 import com.tcon.careers.dto.StatusUpdateRequest;
 import com.tcon.careers.model.Job;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,38 +41,63 @@ public class JobApplicationService {
     @Value("${app.rate-limit.enabled}")
     private boolean rateLimitEnabled;
 
-    public JobApplication submitApplication(JobApplication application, MultipartFile resume,
-                                           HttpServletRequest request) throws IOException {
+    public JobApplication submitApplication(JobApplicationRequest request, MultipartFile resume,
+                                           HttpServletRequest httpRequest) throws IOException {
         // Rate limiting
         if (rateLimitEnabled) {
-            rateLimitService.checkRateLimit(application.getEmail());
+            rateLimitService.checkRateLimit(request.getEmail());
         }
 
         // Get job details
-        Job job = jobRepository.findById(application.getJobId())
-                .orElseThrow(() -> new RuntimeException("Job not found with id: " + application.getJobId()));
+        Job job = jobRepository.findById(request.getJobId())
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + request.getJobId()));
 
         if (!job.getIsActive()) {
             throw new RuntimeException("This job posting is no longer active");
         }
 
         // Upload resume
-        String resumeFileName = fileStorageService.uploadFile(resume, application.getJobId());
+        String resumeFileName = fileStorageService.uploadFile(resume, request.getJobId());
         String resumeUrl = fileStorageService.getFileUrl(resumeFileName);
 
-        // Set application details
-        application.setJobTitle(job.getTitle());
-        application.setDepartment(job.getDepartment());
-        application.setResumeUrl(resumeUrl);
-        application.setResumeFileName(resume.getOriginalFilename());
-        application.setResumeFileSize(resume.getSize());
-        application.setStatus("submitted");
-        application.setApplicationDate(LocalDateTime.now());
-        application.setLastUpdated(LocalDateTime.now());
-
-        // Set metadata
-        application.setIpAddress(getClientIP(request));
-        application.setUserAgent(request.getHeader("User-Agent"));
+        // Map DTO to Model
+        JobApplication application = JobApplication.builder()
+                .jobId(request.getJobId())
+                .jobTitle(job.getTitle())
+                .department(job.getDepartment())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .email(request.getEmail())
+                .phone(request.getPhone())
+                .linkedinUrl(request.getLinkedinUrl())
+                .portfolioUrl(request.getPortfolioUrl())
+                .githubUrl(request.getGithubUrl())
+                .currentLocation(request.getCurrentLocation())
+                .willingToRelocate(request.getWillingToRelocate())
+                .yearsOfExperience(request.getYearsOfExperience())
+                .currentRole(request.getCurrentRole())
+                .currentCompany(request.getCurrentCompany())
+                .noticePeriod(request.getNoticePeriod())
+                .expectedSalary(request.getExpectedSalary())
+                .coverLetter(request.getCoverLetter())
+                .referralSource(request.getReferralSource())
+                .referralName(request.getReferralName())
+                .additionalComments(request.getAdditionalComments())
+                .skills(request.getSkills())
+                .certifications(request.getCertifications())
+                .education(request.getEducation())
+                .resumeUrl(resumeUrl)
+                .resumeFileName(resume.getOriginalFilename())
+                .resumeFileSize(resume.getSize())
+                .status("submitted")
+                .applicationDate(LocalDateTime.now())
+                .lastUpdated(LocalDateTime.now())
+                .ipAddress(getClientIP(httpRequest))
+                .userAgent(httpRequest.getHeader("User-Agent"))
+                .statusHistory(new ArrayList<>())
+                .adminNotes(new ArrayList<>())
+                .interviewSchedule(new ArrayList<>())
+                .build();
 
         // Add initial status history
         JobApplication.StatusHistory initialStatus = JobApplication.StatusHistory.builder()
@@ -332,4 +359,3 @@ public class JobApplicationService {
                 .build();
     }
 }
-
