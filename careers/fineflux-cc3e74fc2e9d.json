@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "fineflux",
+  "private_key_id": "cc3e74fc2e9d9b210a4ec260046a09345abc1cc0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDaGNCbcvO3npiS\n2k3OiFCIppyUl14fudrM6qgSdfS9m3xT4zMk4b+j/ie0ItxI1kvSTHeMPC0gIahq\nXt0eOg0Cgnb6S0xp5RYGzbAKulxnBGeeKJHOpQyVWVeTb1+vZGOXd//eVHz6S3JE\netB8z8eV2M5y1F4rsnKc7gpY3hRXfS2QAqVonBGS6FeS0X01rsvzXs1PhxjBIrAZ\nXMO63ulGnpRnI+/fDN4eVeRhuV1GXARLGM9yOXILwRHIfM3KhEM/H34FT9nRAlzp\nP8ADXykXe8BxyQwua+xI6z72fkoHXH+bdtLpaPwGUWOr5UwnwupLn8yol/FyXfVv\n3JeHUFjvAgMBAAECggEAJq31+UvGy472Ej1jRTjJx6J87KF30PqeQm9vhW6kDCiS\nQTJvNKBQ453Ent774HMZGV/0Z8uYWTV+7/aJEr5K5mILBdLq53D4mhZKnWx1zNNs\nKRGa4mJFPAuPS5eaCbotK4TdvSmQzLcqudhqN2iGRh4gZx8g4HESgKB6903Tn7xA\n0vYafppKsIDf1KWN+kIHtXPHwY+5RxXIjXXLN2gvOWahTFf3/jxSDCV36IhUHYf5\ncbID+eM75IbqwkVC4GF6Zzg+8cy+GzfFh8U2kxTvNcTGeLfeI4yGbBSuHU6YAUB+\nw6gaAkptoK4wW/YSTqi9/OrFWehMvVwSaLfLH6Z5gQKBgQDtXRjGSzuxObArNgub\nSesx/S6TcQSqr4igEsR9z99E8ugcBSdKIEclbRHhfPGbnMSapJ/WyDzvGHUckuxP\nc0hZiYq+yzdCmV2rj08dWa6DWT/5U7ln1oNTR/lypggZlaoZmrz6hkjyB58sQMB4\nvDVSqwN68jS/h8swNzygXl5xrwKBgQDrOHctAK6l18OslQoD2BLC1HqZ02uSPQ5u\nIm1aWl8m1gSDMqBrjMSdLC1vJeHBDIFMwqegzqdje0NW9A+N4GCzLmtm4enmLcz7\niuhpkRk9N7QNejUcMiSB0dopIRHVypoarEivyTPoXCGp4XRJhpO5HQPJweRyet18\nO+b03AqcwQKBgFMhvPCOHtzmMG4h4pTDoc0DOFHJTnIdQkOV7x2FNVQnouVVZLpQ\nbbqM5atMoC35DN6Ac768qKKwtSuJxZvZ62f4hRBnifYYUrcoXPQRmc5E7uP6z7+v\nYJVFavcdcU7MnSOUj0VKzLd/td7A2uguOpq2bGSd+Z1vCNndLq2X/4nfAoGBAIqs\nTm5koZI6Yyzi7PWZNG5ScDkyEJA1mMVLXKbQ8pnlwOFMPpFJezyiJ+MINVDnu27y\nr3q5eqvGpsujtWvSZZAdhMox1ACU7e06VoyuM3AI4Ai2DIuj8Cvs+S4YRfiBqlqh\nSXUBLK4Hav1JYpJaWcrflTUkLzdiwiMU+bNP6p3BAoGBAJlAta6e/z9Z82etddQ6\nAYBfUc8XfRo3+J6G2mG7M7PVQygFUtTTOi7HBLy+t5aLj0LqYZrs9XzSl7ejoIpb\nrRDubS7VZYPPzYB+zpHMNzxOcArRCjb/9dbpeNXKDJpazb8s4w16yEou05sAvhA7\nIdlCvpXw0MxbupFhM1YkrPVq\n-----END PRIVATE KEY-----\n",
+  "client_email": "tcon-careers@fineflux.iam.gserviceaccount.com",
+  "client_id": "110969409580519644345",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/tcon-careers%40fineflux.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
