@@ -334,7 +334,37 @@ Content-Type: application/json
 }
 ```
 
-### 6. DELETE `/api/admin/jobs/{id}` 🔒 Admin Only
+### 6. PATCH `/api/admin/jobs/{id}/status` 🔒 Admin Only
+Toggle job status (Active/Inactive).
+
+**Headers:**
+```
+Authorization: Bearer <JWT_TOKEN>
+Content-Type: application/json
+```
+
+**Request:**
+```json
+{
+  "isActive": false
+}
+```
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Job status updated successfully",
+  "data": {
+    "id": "675d4f2a8e9b1c3d4e5f6a7b",
+    "title": "Senior Full Stack Developer",
+    "isActive": false,
+    ...
+  }
+}
+```
+
+### 7. DELETE `/api/admin/jobs/{id}` 🔒 Admin Only
 Soft delete a job (sets isActive to false).
 
 **Headers:**
@@ -370,33 +400,40 @@ Content-Type: multipart/form-data
 ```
 
 **Request (Multipart Form Data):**
-```
-application (JSON part):
+
+**Part 1: `application` (JSON)**
+```json
 {
+  // --- REQUIRED FIELDS ---
   "jobId": "675d4f2a8e9b1c3d4e5f6a7b",
   "firstName": "John",
   "lastName": "Doe",
   "email": "john.doe@example.com",
   "phone": "+1234567890",
+  "currentLocation": "New York, NY",
+  "yearsOfExperience": 6,
+  "currentRole": "Senior Developer",
+  "noticePeriod": "30 days",
+  "education": "Bachelor's",
+
+  // --- OPTIONAL FIELDS ---
+  "willingToRelocate": true,
+  "currentCompany": "Tech Corp",
+  "expectedSalary": "$140,000",
   "linkedinUrl": "https://linkedin.com/in/johndoe",
   "portfolioUrl": "https://johndoe.com",
   "githubUrl": "https://github.com/johndoe",
-  "currentLocation": "New York, NY",
-  "willingToRelocate": true,
-  "yearsOfExperience": 6,
-  "currentRole": "Senior Developer",
-  "currentCompany": "Tech Corp",
-  "noticePeriod": "30 days",
-  "expectedSalary": "$140,000",
   "coverLetter": "I am very interested in this position...",
   "referralSource": "LinkedIn",
+  "referralName": "Jane Smith",
+  "additionalComments": "Available after 5 PM",
   "skills": ["React", "Node.js", "MongoDB", "AWS"],
-  "certifications": ["AWS Certified Developer"],
-  "education": "Bachelor's"
+  "certifications": ["AWS Certified Developer"]
 }
-
-resume (File part): resume.pdf
 ```
+
+**Part 2: `resume` (File)**
+- Upload a PDF, DOC, or DOCX file (Max 5MB).
 
 **Response (201 Created):**
 ```json
@@ -422,7 +459,7 @@ resume (File part): resume.pdf
     "currentCompany": "Tech Corp",
     "noticePeriod": "30 days",
     "expectedSalary": "$140,000",
-    "resumeUrl": "http://localhost:8080/api/files/resume_675d4f2a8e9b1c3d4e5f6a7b_20251226_143000_a1b2c3d4.pdf",
+    "resumeUrl": "https://storage.googleapis.com/tcon-careers/resumes/675d4f2a8e9b1c3d4e5f6a7b/resume_20251226_143000_a1b2c3d4.pdf",
     "resumeFileName": "resume.pdf",
     "resumeFileSize": 245678,
     "coverLetter": "I am very interested in this position...",
@@ -529,7 +566,7 @@ GET /api/admin/applications?status=submitted&page=0&size=10
         "currentRole": "Senior Developer",
         "status": "submitted",
         "applicationDate": "2025-12-26T14:30:00",
-        "resumeUrl": "http://localhost:8080/api/files/resume_...",
+        "resumeUrl": "https://storage.googleapis.com/tcon-careers/resumes/...",
         "statusHistory": [...],
         "adminNotes": [],
         "interviewSchedule": []
@@ -583,7 +620,7 @@ GET /api/admin/applications/a1b2c3d4-e5f6-7890-abcd-ef1234567890
     "currentCompany": "Tech Corp",
     "noticePeriod": "30 days",
     "expectedSalary": "$140,000",
-    "resumeUrl": "http://localhost:8080/api/files/resume_...",
+    "resumeUrl": "https://storage.googleapis.com/tcon-careers/resumes/...",
     "resumeFileName": "resume.pdf",
     "resumeFileSize": 245678,
     "coverLetter": "I am very interested in this position...",
@@ -978,7 +1015,7 @@ All endpoints return responses in this format:
 4. **Resume Files**: 
    - Supported formats: PDF, DOC, DOCX
    - Maximum size: 5MB
-   - Files stored in: `uploads/resumes/`
+   - Files stored in: Google Cloud Storage Bucket
 
 5. **Rate Limiting**: Application submissions are rate-limited (configurable, default: 3 per hour per email)
 
@@ -1032,7 +1069,6 @@ http://localhost:8080/swagger-ui.html
 
 ---
 
-**Last Updated:** December 26, 2025  
+**Last Updated:** February 02, 2026  
 **API Version:** 1.0.0  
 **Base URL:** http://localhost:8080
-
